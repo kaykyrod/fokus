@@ -2,32 +2,43 @@ const html = document.querySelector('html');
 const focoBt = document.querySelector('.app__card-button--foco');
 const curtoBT = document.querySelector('.app__card-button--curto');
 const longoBT = document.querySelector('.app__card-button--longo');
-const iniciarBT = document.querySelector('.app__card-primary-button');
 const banner = document.querySelector('.app__image');
 const titulo = document.querySelector('.app__title');
-// const timer = document.querySelector('#timer');
+const botoes = document.querySelectorAll('.app__card-button');
+const musicaFocoInput = document.querySelector('#alternar-musica');
+const musica = new Audio('/sons/luna-rise-part-one.mp3');
+musica.loop = true;
 
-
-// const tempFoco = 1500;
-// const tempDescansoCurto = 300;
-// const tempDescansoLongo = 900;
-
+musicaFocoInput.addEventListener('change', () => {
+    if (musica.paused) {
+        musica.play()
+    } else {
+        musica.pause()
+    }
+})
 
 focoBt.addEventListener('click', () => {
     alterarContexto('foco');
+    focoBt.classList.add('active');
 })
 
 curtoBT.addEventListener('click', () => {
     alterarContexto('descanso-curto');
+    curtoBT.classList.add('active');
 })
 
 longoBT.addEventListener('click', () => {
     alterarContexto('descanso-longo');
+    longoBT.classList.add('active');
 })
 
 function alterarContexto(contexto) {
+    botoes.forEach(function (contexto) {
+        contexto.classList.remove('active')
+    })
     html.setAttribute('data-contexto', contexto);
     banner.setAttribute('src', `/imagens/${contexto}.png`);
+
     switch (contexto) {
         case 'foco':
             titulo.innerHTML = 
